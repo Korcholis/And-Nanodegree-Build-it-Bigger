@@ -14,12 +14,16 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-public class JokeTask extends AsyncTask<Context, Void, String> {
+public class JokeTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
+    private JokeTaskPostListener listener;
+
+    public JokeTask(JokeTaskPostListener listener) {
+        this.listener = listener;
+    }
 
     @Override
-    protected String doInBackground(Context... contexts) {
+    protected String doInBackground(Void... voids) {
         if (myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -38,8 +42,6 @@ public class JokeTask extends AsyncTask<Context, Void, String> {
             myApiService = builder.build();
         }
 
-        context = contexts[0];
-
         try {
             return myApiService.tellJoke().execute().getData();
         } catch (IOException e) {
@@ -49,9 +51,12 @@ public class JokeTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, JokeTellerActivity.class);
-        intent.putExtra(JokeTellerActivity.JOKE_INTENT_EXTRA, result);
-        context.startActivity(intent);
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        if (listener != null) {
+            listener.onTaskFinished(result);
+        }
+    }
+
+    public interface JokeTaskPostListener {
+        void onTaskFinished(String result);
     }
 }
