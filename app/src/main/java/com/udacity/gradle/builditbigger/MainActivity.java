@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.korcholis.joketellerlib.JokeTellerActivity;
+import com.udacity.gradle.builditbigger.utils.AdMachine;
 import com.udacity.gradle.builditbigger.utils.JokeTask;
 
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AdMachine.init(this);
     }
 
 
@@ -43,12 +45,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        JokeTask task = new JokeTask(new JokeTask.JokeTaskPostListener() {
+        final MainActivityFragment fragment = (MainActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        fragment.showLoading();
+
+        JokeTask task = new JokeTask(new JokeTask.OnJokeTaskPostListener() {
             @Override
-            public void onTaskFinished(String result) {
-                Intent intent = new Intent(getBaseContext(), JokeTellerActivity.class);
-                intent.putExtra(JokeTellerActivity.JOKE_INTENT_EXTRA, result);
-                startActivity(intent);
+            public void onTaskFinished(final String result) {
+                AdMachine.loadInterstitialIfNeeded(new AdMachine.OnInterstitialFinishedListener() {
+                    @Override
+                    public void onFinish() {
+                        Intent intent = new Intent(getBaseContext(), JokeTellerActivity.class);
+                        intent.putExtra(JokeTellerActivity.JOKE_INTENT_EXTRA, result);
+                        startActivity(intent);
+                        fragment.hideLoading();
+                    }
+                });
             }
         });
         task.execute();

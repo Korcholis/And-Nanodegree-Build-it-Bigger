@@ -12,9 +12,9 @@ import java.io.IOException;
 
 public class JokeTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
-    private JokeTaskPostListener listener;
+    private OnJokeTaskPostListener listener;
 
-    public JokeTask(JokeTaskPostListener listener) {
+    public JokeTask(OnJokeTaskPostListener listener) {
         this.listener = listener;
     }
 
@@ -52,7 +52,7 @@ public class JokeTask extends AsyncTask<Void, Void, String> {
         }
     }
 
-    public interface JokeTaskPostListener {
+    public interface OnJokeTaskPostListener {
         void onTaskFinished(String result);
     }
 }

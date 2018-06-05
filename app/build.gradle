@@ -35,13 +35,12 @@ android {
     flavorDimensions 'price'
 
     productFlavors {
-        paid {
-            applicationIdSuffix ".paid"
+        free {
             dimension 'price'
         }
 
-        free {
-            applicationIdSuffix ".free"
+        paid {
+            applicationIdSuffix ".paid"
             dimension 'price'
         }
     }
