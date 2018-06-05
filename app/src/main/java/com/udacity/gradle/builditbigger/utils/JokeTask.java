@@ -1,15 +1,11 @@
-package com.udacity.gradle.builditbigger;
+package com.udacity.gradle.builditbigger.utils;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.korcholis.joketellerlib.JokeTellerActivity;
 import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;

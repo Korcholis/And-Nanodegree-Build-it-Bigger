@@ -6,21 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.korcholis.jokeslib.Jokes;
 import com.korcholis.joketellerlib.JokeTellerActivity;
+import com.udacity.gradle.builditbigger.utils.JokeTask;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private Jokes jokes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        jokes = new Jokes();
     }
 
 
