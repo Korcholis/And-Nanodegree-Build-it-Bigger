@@ -1,7 +1,6 @@
 package com.udacity.gradle.builditbigger.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
